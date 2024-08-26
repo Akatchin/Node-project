@@ -2,6 +2,7 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const app = express();
+const admin = require('./routes/admin');
 
 // Configurações
     // Body Parser
@@ -14,7 +15,7 @@ const app = express();
     //Mongoose
     
 // Rotas
-
+    app.use('/', admin)
 // Outros
 const PORT = 2002;
 app.listen(PORT, () => {
