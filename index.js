@@ -3,6 +3,8 @@ const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const app = express();
 const admin = require('./routes/admin');
+const path = require('path');
+const mongoose = require('mongoose');
 
 // Configurações
     // Body Parser
@@ -13,7 +15,16 @@ const admin = require('./routes/admin');
         app.set('view engine', 'handlebars');
         app.set('views', './views');
     //Mongoose
-    
+        mongoose.Promise = global.Promise;
+        mongoose.connect('mongodb://localhost/blogapp')
+        .then(() => {
+            console.log("Conectado ao MongoDB");
+        })
+        .catch((err) => {
+            console.log("Falha ao se conectar ao MongoDB: "+err);
+        })
+    //Public
+        app.use(express.static(path.join(__dirname, 'public')));
 // Rotas
     app.use('/', admin)
 // Outros
